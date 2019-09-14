@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,4 +52,14 @@ public class NativeQueryTest {
 		log.info("SELECT * FROM COURSE where id = :id -> {}", resultList);
 	}
 	
+	@Test
+	@Transactional
+	public void native_query_to_update() {
+		Query query = 
+			em.createNativeQuery("Update COURSE set last_updated_date=sysdate()", Course.class);
+		int numOfRowsUpdated = query.executeUpdate();
+		log.info("Update COURSE set last_updated_date=sysdate() -> {}", numOfRowsUpdated);
+	}
+	
 }
+ 
