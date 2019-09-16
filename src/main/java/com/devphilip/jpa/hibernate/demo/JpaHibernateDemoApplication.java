@@ -8,7 +8,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.devphilip.jpa.hibernate.demo.entity.Course;
+import com.devphilip.jpa.hibernate.demo.entity.Student;
 import com.devphilip.jpa.hibernate.demo.repository.CourseRepository;
+import com.devphilip.jpa.hibernate.demo.repository.StudentRepository;
 
 @SpringBootApplication
 public class JpaHibernateDemoApplication implements CommandLineRunner {
@@ -17,6 +19,9 @@ public class JpaHibernateDemoApplication implements CommandLineRunner {
 	
 	@Autowired
 	private CourseRepository courseRepository; 
+	
+	@Autowired
+	private StudentRepository studentRepository;  
 
 	public static void main(String[] args) {
 		SpringApplication.run(JpaHibernateDemoApplication.class, args);
@@ -24,13 +29,24 @@ public class JpaHibernateDemoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		
+//		studentRepository.saveStudentWithPassport();
 //		Course course = courseRepository.findById(10001L);
 //		
 //		log.info("{}", course);
 //		
 //		courseRepository.save(new Course("MicroServices Indept"));
 		
-		courseRepository.playWithEntityManager();
+		//		courseRepository.playWithEntityManager();
+//		courseRepository.addHardCodedReviewsForCourse();
+		
+//		List<Review> reviews = new ArrayList<>();
+//		reviews.add(new Review("5", "Greate Hands-on course"));
+//		reviews.add(new Review("5", "Greate Hands-on stuff"));
+//		courseRepository.addReviewsForCourse(10003L, reviews);
+		
+//		studentRepository.insertHardCodedStudentAndCourse();
+		studentRepository.insertStudentAndCourse(new Student("Morris"), new Course("Microservices in 100 Steps"));
 		
 	}
 
