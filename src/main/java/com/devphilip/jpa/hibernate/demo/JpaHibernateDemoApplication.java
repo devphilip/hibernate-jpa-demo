@@ -1,5 +1,7 @@
 package com.devphilip.jpa.hibernate.demo;
 
+import java.math.BigDecimal;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +10,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.devphilip.jpa.hibernate.demo.entity.Course;
+import com.devphilip.jpa.hibernate.demo.entity.Employee;
+import com.devphilip.jpa.hibernate.demo.entity.FullTimeEmployee;
+import com.devphilip.jpa.hibernate.demo.entity.PartTimeEmployee;
 import com.devphilip.jpa.hibernate.demo.entity.Student;
 import com.devphilip.jpa.hibernate.demo.repository.CourseRepository;
+import com.devphilip.jpa.hibernate.demo.repository.EmployeeRepository;
 import com.devphilip.jpa.hibernate.demo.repository.StudentRepository;
 
 @SpringBootApplication
@@ -19,9 +25,10 @@ public class JpaHibernateDemoApplication implements CommandLineRunner {
 	
 	@Autowired
 	private CourseRepository courseRepository; 
-	
 	@Autowired
 	private StudentRepository studentRepository;  
+	@Autowired
+	private EmployeeRepository employeeRepository;  
 
 	public static void main(String[] args) {
 		SpringApplication.run(JpaHibernateDemoApplication.class, args);
@@ -46,7 +53,15 @@ public class JpaHibernateDemoApplication implements CommandLineRunner {
 //		courseRepository.addReviewsForCourse(10003L, reviews);
 		
 //		studentRepository.insertHardCodedStudentAndCourse();
-		studentRepository.insertStudentAndCourse(new Student("Morris"), new Course("Microservices in 100 Steps"));
+//		studentRepository.insertStudentAndCourse(new Student("Morris"), new Course("Microservices in 100 Steps"));
+		
+		FullTimeEmployee fullTimeEmployee = new FullTimeEmployee("Micheal", new BigDecimal("5000"));
+		employeeRepository.insert(fullTimeEmployee);
+		log.info("EmployeeRepository Retrieve PartTimeEmployees => {}", employeeRepository.retrievePartTimeEmployees());
+		
+		PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Jim", new BigDecimal("50"));
+		employeeRepository.insert(partTimeEmployee);
+		log.info("EmployeeRepository Retrieve FullTimeEmployees => {}", employeeRepository.retrievePartTimeEmployees());
 		
 	}
 
