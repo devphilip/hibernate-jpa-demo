@@ -54,15 +54,17 @@ public class JpaHibernateDemoApplication implements CommandLineRunner {
 		
 //		studentRepository.insertHardCodedStudentAndCourse();
 //		studentRepository.insertStudentAndCourse(new Student("Morris"), new Course("Microservices in 100 Steps"));
-		
-		FullTimeEmployee fullTimeEmployee = new FullTimeEmployee("Micheal", new BigDecimal("5000"));
-		employeeRepository.insert(fullTimeEmployee);
-		log.info("EmployeeRepository Retrieve PartTimeEmployees => {}", employeeRepository.retrievePartTimeEmployees());
-		
-		PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Jim", new BigDecimal("50"));
-		employeeRepository.insert(partTimeEmployee);
-		log.info("EmployeeRepository Retrieve FullTimeEmployees => {}", employeeRepository.retrievePartTimeEmployees());
-		
+		/*
+		 * FullTimeEmployee fullTimeEmployee = new FullTimeEmployee("Micheal", new
+		 * BigDecimal("5000")); employeeRepository.insert(fullTimeEmployee);
+		 * log.info("EmployeeRepository Retrieve PartTimeEmployees => {}",
+		 * employeeRepository.retrievePartTimeEmployees());
+		 * 
+		 * PartTimeEmployee partTimeEmployee = new PartTimeEmployee("Jim", new
+		 * BigDecimal("50")); employeeRepository.insert(partTimeEmployee);
+		 * log.info("EmployeeRepository Retrieve FullTimeEmployees => {}",
+		 * employeeRepository.retrievePartTimeEmployees());
+		 */
 	}
 
 }

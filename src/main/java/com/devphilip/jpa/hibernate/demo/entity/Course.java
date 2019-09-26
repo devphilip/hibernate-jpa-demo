@@ -100,10 +100,15 @@ public class Course {
 		this.lastUpdatedDate = lastUpdatedDate;
 	}
 
+//	@Override
+//	public String toString() {
+//		return String.format("Course [name=%s, reviews=%s, createdDate=%s, lastUpdatedDate=%s]", name, reviews,
+//				createdDate, lastUpdatedDate);
+//	}
+	
 	@Override
 	public String toString() {
-		return String.format("Course [name=%s, reviews=%s, createdDate=%s, lastUpdatedDate=%s]", name, reviews,
-				createdDate, lastUpdatedDate);
+		return String.format("Course[%s]", name);
 	}
 
 }
