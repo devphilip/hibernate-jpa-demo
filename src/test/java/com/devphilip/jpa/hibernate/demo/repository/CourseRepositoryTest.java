@@ -18,7 +18,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.devphilip.jpa.hibernate.demo.JpaHibernateDemoApplication;
 import com.devphilip.jpa.hibernate.demo.entity.Course;
 import com.devphilip.jpa.hibernate.demo.entity.Review;
-import com.devphilip.jpa.hibernate.demo.entity.Student;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = JpaHibernateDemoApplication.class)
@@ -36,6 +35,19 @@ public class CourseRepositoryTest {
 	public void findById_basic() {
 		Course course = repository.findById(10001L);
 		assertEquals("JPA Demo", course.getName());
+	}
+	
+	@Test
+	@Transactional
+	public void findById_firstLevelCacheDemo() {
+		Course course = repository.findById(10001L);
+		log.info("First Course Retrieved {}", course);
+		
+		Course course1 = repository.findById(10001L);
+		log.info("First Course Retrieved - again {}", course);
+		
+		assertEquals("JPA Demo", course.getName());
+		assertEquals("JPA Demo", course1.getName());
 	}
 
 	@Test

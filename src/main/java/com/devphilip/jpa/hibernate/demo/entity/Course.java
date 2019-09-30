@@ -4,27 +4,39 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @NamedQueries(value = { @NamedQuery(name = "query_get_all_courses", query = "Select c From Course c"),
 		@NamedQuery(name = "query_get_demo_courses", query = "Select c From Course c where name like '%Demo'"), })
+@Cacheable
+@SQLDelete(sql = "update course set is_deleted=true where id=?")
+@Where(clause = "is_deleted=false")
 public class Course {
+	
+	private static final Logger log = LoggerFactory.getLogger(Course.class);
 
 	@Id
 	@GeneratedValue
-	private Long Id;
+	private Long id;
 
 	@Column(nullable = false)
 	private String name;
@@ -33,6 +45,7 @@ public class Course {
 	private List<Review> reviews = new ArrayList<>();
 
 	@ManyToMany(mappedBy = "courses")
+	@JsonIgnore
 	private List<Student> students = new ArrayList<>();
 
 	@CreationTimestamp
@@ -40,6 +53,14 @@ public class Course {
 
 	@UpdateTimestamp
 	private LocalDateTime lastUpdatedDate;
+	
+	private boolean isDeleted;
+	
+	@PreRemove
+	private void preRemove() {
+		log.info("Setting isDeletd = true");
+		this.isDeleted = true; 
+	}
 
 	public Course() {
 	}
@@ -49,7 +70,7 @@ public class Course {
 	}
 
 	public Long getId() {
-		return Id;
+		return id;
 	}
 
 	public String getName() {
@@ -82,6 +103,14 @@ public class Course {
 	
 	public void removeStudents(Student student) {
 		this.students.remove(student);
+	}
+	
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 	public LocalDateTime getCreatedDate() {

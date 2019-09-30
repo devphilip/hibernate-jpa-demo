@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.devphilip.jpa.hibernate.demo.entity.Course;
 import com.devphilip.jpa.hibernate.demo.entity.Review;
+import com.devphilip.jpa.hibernate.demo.entity.ReviewRating;
 
 @Repository
 @Transactional
@@ -62,23 +63,23 @@ public class CourseRepository {
 		}
 	}
 
-//	public void addHardCodedReviewsForCourse() {
-//		// get the course 10003
-//		Course course = findById(10003L);
-//		log.info("course.getReviews() -> {}", course.getReviews());
-//		// add 2 reviews to it
-//		Review review1 = new Review("5", "Greate Hands-on course");
-//		Review review2 = new Review("5", "Greate Hands-on stuff");
-//		// setting the relationship
-//		course.addReview(review1);
-//		review1.setCourse(course);
-//		
-//		course.addReview(review2);
-//		review2.setCourse(course);
-//		// save it to the database
-//		em.persist(review1);
-//		em.persist(review2);
-//	}
+	public void addHardCodedReviewsForCourse() {
+		// get the course 10003
+		Course course = findById(10003L);
+		log.info("course.getReviews() -> {}", course.getReviews());
+		// add 2 reviews to it
+		Review review1 = new Review(ReviewRating.FIVE, "Greate Hands-on course");
+		Review review2 = new Review(ReviewRating.FIVE, "Greate Hands-on stuff");
+		// setting the relationship
+		course.addReview(review1);
+		review1.setCourse(course);
+		
+		course.addReview(review2);
+		review2.setCourse(course);
+		// save it to the database
+		em.persist(review1);
+		em.persist(review2);
+	}
 
 //	// playing with EntityManager
 //	public void playWithEntityManager() {

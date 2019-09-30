@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -22,6 +23,9 @@ public class Student {
 
 	@Column(nullable = false)
 	private String name;
+	
+	@Embedded
+	private Address address;
 
 	@OneToOne(fetch = FetchType.LAZY)
 	private Passport passport;
@@ -51,6 +55,14 @@ public class Student {
 		this.name = name;
 	}
 
+	public Address getAddress() {
+		return address;
+	}
+	
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	
 	public Passport getPassport() {
 		return passport;
 	}
@@ -75,5 +87,4 @@ public class Student {
 	public String toString() {
 		return String.format("Student [name=%s]", name);
 	}
-
 }
