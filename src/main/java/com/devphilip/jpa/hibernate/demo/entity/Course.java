@@ -25,8 +25,13 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@NamedQueries(value = { @NamedQuery(name = "query_get_all_courses", query = "Select c From Course c"),
-		@NamedQuery(name = "query_get_demo_courses", query = "Select c From Course c where name like '%Demo'"), })
+@NamedQueries(value = { 
+		@NamedQuery(name = "query_get_all_courses", 
+					query = "Select c From Course c"),
+		@NamedQuery(name = "query_get_all_courses_with_join_fetch", 
+					query = "Select c From Course c JOIN FETCH c.students s"),
+		@NamedQuery(name = "query_get_demo_courses", 
+					query = "Select c From Course c where name like '%Demo'"), })
 @Cacheable
 @SQLDelete(sql = "update course set is_deleted=true where id=?")
 @Where(clause = "is_deleted=false")
